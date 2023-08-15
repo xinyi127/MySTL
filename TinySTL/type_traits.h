@@ -12,13 +12,13 @@ namespace mystl
     // helper struct
     // 表示编译时常量，静态成员变量 value 来存储常量值。
     template <class T, T v>
-    struct m_integral_constant
-    {
-        static constexpr T value = v;
-    };
+        struct m_integral_constant
+        {
+            static constexpr T value = v;
+        };
 
     template <bool b>
-    using m_bool_constant = m_integral_constant<bool, b>;
+        using m_bool_constant = m_integral_constant<bool, b>;
 
     typedef m_bool_constant<true>  m_true_type;
     typedef m_bool_constant<false> m_false_type;
@@ -30,15 +30,15 @@ namespace mystl
 
     // --- forward declaration begin
     template <class T1, class T2>
-    struct pair;
+        struct pair;
     // --- forward declaration end
 
     // 判断是否为 pair，默认不是，然后通过偏特化设置为是
     template <class T>
-    struct is_pair : mystl::m_false_type {};
+        struct is_pair : mystl::m_false_type {};
 
     template <class T1, class T2>
-    struct is_pair<mystl::pair<T1, T2>> : mystl::m_true_type {};
+        struct is_pair<mystl::pair<T1, T2>> : mystl::m_true_type {};
 
 } // namespace mystl
 

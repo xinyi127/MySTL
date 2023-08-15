@@ -11,34 +11,36 @@ namespace mystl
 {
 
     // 五种迭代器类型
-    struct input_iterator_tag {};
-    struct output_iterator_tag {};
-    struct forward_iterator_tag : public input_iterator_tag {};
-    struct bidirectional_iterator_tag : public forward_iterator_tag {};
-    struct random_access_iterator_tag : public bidirectional_iterator_tag {};
+    struct input_iterator_tag {}; // 输入迭代器标签
+    struct output_iterator_tag {}; // 输出迭代器标签
+    struct forward_iterator_tag : public input_iterator_tag {}; // 前项迭代器标签
+    struct bidirectional_iterator_tag : public forward_iterator_tag {}; // 双向迭代器标签
+    struct random_access_iterator_tag : public bidirectional_iterator_tag {}; // 随机访问迭代器标签
 
     // iterator 模板
     template <class Category, class T, class Distance = ptrdiff_t,
              class Pointer = T*, class Reference = T&>
                  struct iterator
                  {
-                     typedef Category                             iterator_category;
-                     typedef T                                    value_type;
-                     typedef Pointer                              pointer;
-                     typedef Reference                            reference;
-                     typedef Distance                             difference_type;
+                     typedef Category                     iterator_category; // 迭代器类型，上述五种标签之一
+                     typedef T                            value_type; // 值类型
+                     typedef Pointer                      pointer; // 指针类型
+                     typedef Reference                    reference; // 引用类型
+                     typedef Distance                     difference_type; // 距离类型
                  };
 
     // iterator traits
 
     template <class T>
-        struct has_iterator_cat
+        struct has_iterator_cat // 检查模板参数 T 是否具有 iterator_category 成员类型
         {
             private:
                 struct two { char a; char b; };
                 template <class U> static two test(...);
+                // 当 U 类型具有名为 iterator_category 的成员类型时才能匹配成功
                 template <class U> static char test(typename U::iterator_category* = 0);
             public:
+                // 很精妙的设计，通过比较 test 的返回值判断是否具有 category 类型
                 static const bool value = sizeof(test<T>(0)) == sizeof(char);
         };
 
@@ -61,6 +63,7 @@ namespace mystl
     template <class Iterator>
         struct iterator_traits_helper<Iterator, true>
         : public iterator_traits_impl<Iterator,
+        // 判断 Iterator 的 iterator_category 是否可以转换为 input_iterator_tag 或 output_iterator_tag
         std::is_convertible<typename Iterator::iterator_category, input_iterator_tag>::value ||
             std::is_convertible<typename Iterator::iterator_category, output_iterator_tag>::value>
             {
