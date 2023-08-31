@@ -1,4 +1,4 @@
-fndef TINYSTL_STACK_H
+#ifndef TINYSTL_STACK_H
 #define TINYSTL_STACK_H
 
 #include "list.h"  // 包含底层容器list的头文件
