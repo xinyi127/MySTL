@@ -36,7 +36,7 @@ namespace mystl
                 T* tmp = static_cast<T*>(malloc(static_cast<size_t>(len) * sizeof(T)));
                 if (tmp)
                     return pair<T*, ptrdiff_t>(tmp, len);
-                len /= 2;  // 申请失败时减少 len 的大小
+                len /= 2;  // 申请失败时减少 len 的大小，每次减小一半
             }
             return pair<T*, ptrdiff_t>(nullptr, 0);
         }
