@@ -200,12 +200,11 @@ namespace mystl
         };
 
     // 对于整型类型，只是返回原值
-#define MYSTL_TRIVIAL_HASH_FCN(Type)
-    template <> struct hash<Type>
-    {
-        size_t operator()(Type val) const noexcept
-        { return static_cast<size_t>(val); }
-
+#define MYSTL_TRIVIAL_HASH_FCN(Type)                        \
+    template <> struct hash<Type>                           \
+    {                                                       \
+        size_t operator()(Type val) const noexcept          \
+        { return static_cast<size_t>(val); }                \
     };
 
     MYSTL_TRIVIAL_HASH_FCN(bool)
