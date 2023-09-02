@@ -71,7 +71,7 @@ namespace mystl
         }
 
     template <class T>
-        void allocator<T>::deallocate(T* ptr, size_type /size/)
+        void allocator<T>::deallocate(T* ptr, size_type /*size*/)
         {
             if (ptr == nullptr)
                 return;
